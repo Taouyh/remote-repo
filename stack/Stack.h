@@ -5,15 +5,15 @@
 
 typedef int SElemType;
 
-typedef struct 
+typedef struct
 {
     SElemType data;
     struct Node* next;
-}Node, *LinkList;
+}Node, * LinkList;
 
 typedef LinkList Stack;
 
-typedef struct 
+typedef struct
 {
     Node* base;
     Node* top;
@@ -21,24 +21,25 @@ typedef struct
 }SqStack;
 
 
-Stack* InitStack(Stack *s);
+Stack* InitStack(Stack* s);
 
-void DestroyStack(Stack *s);
+void DestroyStack(Stack* s);
 
-void ClearStack(Stack *s);
+void ClearStack(Stack* s);
 
-void StackTraverse(Stack s,void(*visit)(SElemType));
+void StackTraverse(Stack s, void(*visit)(SElemType));
 
-bool StackEmpty(Stack *s);
+bool StackEmpty(Stack* s);
 
-int StackLength(Stack *s);
+int StackLength(Stack* s);
 
-SElemType GetTop(Stack *s,SElemType e);
+SElemType GetTop(Stack* s, SElemType e);
 
-bool Push(Stack *s,SElemType e);
+bool Push(Stack* s, SElemType e);
 
-bool Pop(Stack *s,SElemType e);
+bool Pop(Stack* s, SElemType *e);
 
 void visit(SElemType e);
 
-void Print(Stack *s);
+void Print(Stack* s);
+

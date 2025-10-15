@@ -1,17 +1,22 @@
 #include "Stack.h"
-Stack* InitStack(Stack *s)
+Stack* InitStack(Stack* s)
 {
-    if (!(*s))
-        {
-            printf("Stack does not exit.\n");
-            return NULL;
-        }
+    if (!s)
+    {
+        perror("Fail to allocate memory for the stack.\n");
+        return NULL;
+    }
     (*s) = (Node*)malloc(sizeof(Node));
+    if (!(*s))
+    {
+        printf("Stack does not exit.\n");
+        exit(0);
+    }
     (*s)->next = NULL;
     return s;
 }
 
-void DestroyStack(Stack *s)
+void DestroyStack(Stack* s)
 {
     if (!(*s))
     {
@@ -20,7 +25,7 @@ void DestroyStack(Stack *s)
     }
     //free(*s)
     Node* current = (*s)->next;
-    while(current != NULL)
+    while (current != NULL)
     {
         Node* stack_next = current->next;
         free(current);
@@ -30,7 +35,7 @@ void DestroyStack(Stack *s)
 }
 
 
-bool Push(Stack *s,SElemType e)
+bool Push(Stack* s, SElemType e)
 {
     Node* newData = (Node*)malloc(sizeof(Node));
     newData->data = e;
@@ -47,21 +52,21 @@ bool Push(Stack *s,SElemType e)
     return 0;
 }
 
-bool Pop(Stack *s,SElemType e)
+bool Pop(Stack* s, SElemType *e)
 {
     if (!(*s))
     {
         printf("Stack does not exist.\n");
         exit(0);
     }
-    Node* temp = *s;
-    e = temp->data;
-    (*s) = (*s)->next;
+    Node* temp = (*s)->next;
+    *e = temp->data;
+    (*s)->next = temp->next;
     free(temp);
     return 0;
 }
 
-SElemType GetTop(Stack *s,SElemType e)
+SElemType GetTop(Stack* s, SElemType *e)
 {
     Node* current = (*s)->next;
     e = current->data;
@@ -69,43 +74,48 @@ SElemType GetTop(Stack *s,SElemType e)
 }
 
 
-void Print(Stack *s)
+void Print(Stack* s)
 {
     Node* temp = (*s)->next;
-    printf("Stack: ");
-    while(temp != NULL)
+    if (!temp)
     {
-        printf("%d ",temp->data);
+        printf("Stack is empty,cannot be printed.\n");
+        return;
+    }
+    printf("Stack: ");
+    while (temp != NULL)
+    {
+        printf("%d ", temp->data);
         temp = temp->next;
     }
     printf("\n");
 }
 
-void ClearStack(Stack *s)
+void ClearStack(Stack* s)
 {
     if ((*s)->next != NULL)
     {
         Node* current = (*s)->next;
-        while(current != NULL)
+        while (current != NULL)
         {
             Node* cnext = current->next;
             free(current);
             current = cnext;
         }
     }
-    
+    (*s)->next = NULL;
 }
 
-bool StackEmpty(Stack *s)
+bool StackEmpty(Stack* s)
 {
     return (*s)->next == NULL;
 }
 
-int StackLength(Stack *s)
+int StackLength(Stack* s)
 {
     int i = 0;
     Node* current = (*s)->next;
-    while(current != NULL)
+    while (current != NULL)
     {
         current = current->next;
         i++;
